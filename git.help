@@ -1,0 +1,9 @@
+git add . 
+git commit -m
+git config --global user.email "xxjwwf@163.com"
+git config --global user.name "xiejiawen"
+git status
+git reflog
+git branch
+git branch test  ##create a new branch
+git checkout branch_name
