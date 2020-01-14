@@ -6,4 +6,4 @@ git status
 git reflog
 git branch
 git branch test  ##create a new branch
-git checkout branch_name
+git checkout branch_name #change branch to branch_name
