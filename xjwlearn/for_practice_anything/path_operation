@@ -1,0 +1,171 @@
+import path
+import os
+p = os.path.join('/etc', 'a') #/etc/a
+p = path.join('/etc', ,'a', 'b')
+print(type(p), p)
+
+
+os.path.split(_) #断开路径
+os.path.abspath('a')
+print(__file__) #当前模块路径
+
+from os import path
+print(path.abspath('a')) #同目录下的
+
+print(path.basename(p))
+print(path.dirname(p))
+print(path.exists('filename'))
+
+
+#将路径中的目录逐级取出
+#while True:
+#   print(path.dirname(p))
+#   print(path.dirname)('C:/Users/marion/PycharmProjects/pro1')
+#   print('===========')
+
+while p != path.dirname(p):
+   p = path.dirname(p)
+   print(p)
+
+
+
+from pathlib import Path
+Path() #打印当前路径
+Path(), Path(''), Path('.') #这三个一样
+
+Path('a', 'b', 'c/d', Path('e/f')) #直接创建一个对象
+p = Path('a/b/c/d') #使用相对路径，与工作路径有关
+p
+p.absolute()
+pwd
+p.absolute()
+p / 'e'
+p / 'e' / 'f/g' / Path('h/i', 'k') #可以直接拼接路径
+'t' / p / 'e/f'  #后面拼接的对象字符串不能以/开头
+'r' / 't' / p #报错，因为两个字符串使用/连接时，会报字符串相除的错误，可使用括号来改变优先级
+'r' / ('t' / p)# 这样就没问题了
+p.joinpath('e', 'f/g', Path('h'))
+p.parts  #断开路径
+p.absolute().parts
+
+#取父目录
+p.parent
+p.parent.parent....
+p.absolute().parent...
+p.parents
+next(iter(p.parents))
+
+for x in p.parents:
+   print(type(x), x)
+   
+for x in p.absolute().parents:
+   print(type(x), x)
+   
+p.parents[len(p.parents)-1]
+p.parents[len(p.parents)-2]
+
+
+p1 = p / 'mysql.tar.gz'
+p1
+p1.name
+p1.stem
+p1.suffix
+p1.suffixes
+p1.with_name('myblog.zip')
+p1.with_name('myblog.zip').touch()
+p1.with_name('myblog.zip').parent.mkdir(parents=True)
+p1.with_name('myblog.zip').touch()
+p1.with_suffix('.tz').touch()
+
+p1.home()
+p.home()
+Path.home()
+
+p1.cwd()
+p.cwd(), Path.cwd()
+
+p2
+p2.exists()
+p2.is_dir()
+Path('/tmp').is_dir()
+Path('/tmp').is_file()
+Path('/tmp').is_socket)()
+Path('/tmp').is_block()
+Path('sr0').is_block()
+
+#若文件不存在，那么判断类型则无意义，都会返回False
+Path('s/t/r/z').is_dir()
+Path('s/t/r/z').is_file()
+
+!ln -sv test3 slink
+Path('slink').absolute() #只能显示链接文件的绝对路径
+Path('slink').resolve()  #显示链接下的源文件的绝对路径
+
+
+p1.glob('*.gz')
+list(p1.glob('*.gz'))
+
+Path('a')
+Path('a').exists()
+Path('a').glob('*.gz') #这样不会递归查找
+
+#递归查找
+list(Path('a').glob('**/*'))
+list(Path('a').rglob('*.gz'))
+
+
+#创建目录时，若存在则不报错exist_ok=True
+p.mkdir(exist_ok=True)
+
+for x in Path('a').iterdir():
+   print(type(x), x)
+   if x.is_dir():
+      for y in x.iterdir()
+         print(y)
+   elif x.is_file():
+      print(x, 'file')
+   else:
+      print(x, 'other')
+ 
+ 
+ Path('test4').stat() #显示文件属性
+ Path('slink').stat() #显示源文件的属性
+ Path('slink').lstat() #显示软连接的属性
+ 
+ 
+ import　shutil  #copy, copy2, copytree, rmtree, mv
+ 
+ shutil.copy('t1.py', 'p2.py')
+ 
+ #copytree源代码
+ names = os.listdir(src)
+ if ignore is not None:
+    ignore_names = ignore(src, names)
+ else:
+    ignore_namse = set()
+ 
+ 
+ 
+ from pathlib import Path
+ import shutil
+ 
+ p = Path('a/b/c/d')
+ p.mkdir(parents=True, exist_ok=True)
+ (p/'mysql.tar.gz').touch()
+ (p/'a.py').touch()
+ (p/'b').touch()
+ 
+ def ignore(src, names): #忽略某些特定条件的文件
+    print(src)
+    print(names)
+    print('-------------')
+    s = set()
+    for name in names:
+       if name.endswith('.gz'):
+          s.add(name)
+    return s
+ #   return {name for name in names if name.endswith('.zg')}
+ #   return set(filter(lambda name: name.endswith('.gz'), names ))#忽略的名字
+ shutil.rmtree('acopy')
+ shutil.copytree('a', 'acopy', ignore=ignore)
+ 

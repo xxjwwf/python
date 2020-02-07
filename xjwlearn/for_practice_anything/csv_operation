@@ -1,0 +1,168 @@
+csv文件介绍：
+   import csv
+   
+   filerows
+   
+ 
+filename = 'a/test.cv'
+
+with open(filename, 'w', newline='') as f:
+   writer = csv.writer(f)
+   writer.writerow(rows[0]) #实参是可迭代对象(表头)
+   writer.writerows(rows[1:])
+#注意newline的作用
+with open(filename, newline='') as f:
+   reader = csv.reader(f) #行迭代器
+   print(next(reader))
+   for line in reader:
+      print(line)
+      
+      
+ ini文件处理:(Pycharm), section本身就是字典 
+[DEFAULT]
+a = test
+[mysql]
+default-character-set=utf8
+[mysqld]
+datadir =/dbserver/data
+port = 33060
+character-set-server=utf8
+sql_mode=NO_ENGINE_SUBSTITUTION,STRICT_TRANS_TABLES
+
+
+
+from configparser import ConfigParser
+cfg.ConfigParser()
+cfg.read('test.ini')
+print(read_ok)
+
+
+#print(cfg.items())
+for item in cfg.items():
+   print(type(item), item)
+   
+for k,v in cfg.items():
+   print(type(k), k, type(v), v) #元组，section名称，section对象
+print()
+
+for k,v in cfg.itesm():
+   print(k, cfg.items(k))
+print()
+
+for k in cfg.sections(): #遍历section，不包括缺省和内容
+   print(k)
+   print(cfg.options(k))
+print()
+
+print(cfg.has_section('mysql'))
+print(cfg.has_option('mysqld', 'a'))
+print(cfg.has_option('mysqld', 'port'))
+print('-----------------------------')
+
+
+x = cfg.get('mysqld', 'port')
+print(type(x), x) #字符串，纯文本文件
+print(type(x), int(x)) #显示转换
+
+y = cfg.getint('mysqld', 'port')
+print(type(y), y)
+
+z = cfg.get('mysqld', 'a')
+print(z)
+print(cfg.get('mysql', 'b')) #报错，无此key
+print(cfg.get('mysql', 'b', fallback=[]))  #注意fallback的用法，根据fallback来输出数据类型
+
+
+if cfg.has_section('t1')
+   cfg.remove_section('t1')
+   
+
+cfg.add_section('t1')
+cfg.set('t1', 'k1', 'v1')
+print(cfg.get('t1', 'k1'))
+
+filename = 'a/mysql.ini'
+with open(filename, 'w', encoding='utf-8') as f:
+   cfg.write(f)
+   
+   
+print(cfg['mysql']['a']) #{'mysql':{'a':'test'}}
+cfg['t2'] = {'k2':'v2'}
+print(cfg.get('t2', 'k2'))
+#cfg['t3']['k3'] = 'v3'
+print(cfg.get('t3', 'k3'))
+
+cfg['t3'] = {'k3':'v3', 'k4':'v4'}
+print(cfg.__sections)  
+
+#优先使用已有的kv对，然后才会使用默认
+
+
+
+
+
+
+#序列化与反序列化 protocl buffer(google)  msgpack
+
+
+import pickle
+a = 1
+b = 'abc'
+c = ['123', 127]
+d = {'bbb': 'ccc'}
+# with open('a/ser', 'wb') as f:
+#    pickle.dump(a, f) 
+#    pickle.dump(b, f)
+#    pickle.dump(c, f)
+
+with open('a/ser', 'rb') as f:
+   for i in range(4):
+       b = pickle.load(4)
+       print(type(b), b)
+       print()
+
+
+
+###json纯文本模式 
+
+import json
+
+d = {'a':1, 'b':'abc', 'c':[1,2,3], 'd':[100, 200], 'e':{'f':True, 'g':None}}
+with open('a/test.json', 'w', encoding='utf-8') as f:
+    json.dump(d, f)
+
+j1 = json.dumps(d) #生成json字符串
+print(type(j1))
+print(j1) 
+
+#反序列化
+d2 = json.loads(j1)
+print(type(d2), d2)
+print(d == d2)
+print(d is d2) #两个对象，因此不相等
+print(id(d), id(d2))
+
+
+
+import msgpack #此方式比较高效, 二进制序列化方案更高效，推荐使用此方式
+
+m1 = msgpack.dumps(d)
+print(type(m1), len(m1))  #bytes
+print(m1)
+
+
+习题，将配置文件转换成json文件
+
+
+
+
+
+
+
+
+
+
+
+
+
+

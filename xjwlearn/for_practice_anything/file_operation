@@ -1,0 +1,187 @@
+f = open('test')
+f = open('test', 'w')
+f.write('abc')
+f.write('你好')
+f.close()
+cat test
+f = open('test', 'r')
+f.read() #读取全部内容
+f.read() #空字符串，因为文件指针在文件末尾,需要先关闭文件再打开
+f.close()
+f.read()
+'abc你好'  #5个字符
+f.close()
+x = f.read()
+len(x) #纯文本文件，不根据字节区分
+f.close()
+f = open('test', 'w')
+f.close()
+cat test #此时文件内容为空
+
+f1 = open('test1', 'r') #文件不存在，报错
+f1 = open('test1', 'w') #文件不存在，新创建,只写模式，不可读
+!echo 123 > test1
+f1.read() #报错，不可读
+
+f2 = open('test2', 'x') #文件必须不存在，否则报错，新创建，只写模式
+f2.write('abc')
+f2.read() #不可读，报错
+
+f3 = open('test2', 'a') #文件存在，尾部追加，只写模式
+f3.write('123')
+f3.close()
+f3.closed() #判断文件是否关闭
+f3 = open('test3', 'a') #文件不存在，则创建
+f3.write('xyz') #只写模式
+f3.read()
+f3.close()
+
+#wxa模式都会产生新文件；x比较特殊，文件必须不存在才行
+
+f5 = open('test3', 't') #报错，t和b模式不能单独使用，需和wax混合使用
+f5 = open('test3', 'rt')
+f5.write('') #报错，不可读
+f5.read()
+f5.read() #为空，指针已到文件末尾
+f5.close()
+f5 = open('test3' 'wb') #w会将文件内容全部清空
+f5.close()
+cat test3 #此时文件已被清空
+f5 = open('test3' 'wb')
+f5.write(b'abc') #必须写入bytes-like对象，否则报错
+f5.write('xyz') #报错
+f5.write('啊'.encode()) #正常写入
+f5.read() #报错，只能写
+f5.close()
+cat test3
+
+f6 = open('test3', 'rt')
+f6.read()
+len(_) #显示上述文件的长度，纯文本
+f6.close()
+
+cat test3
+f6 = open('test3', 'rw') #报错
+f6 = open('test3', 'rt+') #补充权限，缺读则加读，缺写则加写
+f6.read()
+f6.e=write('123')
+f6.close()
+cat test3
+
+f6 = open('test3', 'rb+')
+f6.write('你'.encode()) #会覆盖文件三个字符，因为‘你'在转换成bytes时为三个字节
+
+##注意r, w, a, x,模式，在操作文件时，文件指针的初始位置
+f6.read()
+f6.tell()#指明当前索引
+f6.seek(0)#回到0索引
+f6.seek() #报错
+f6.tell()
+
+f6.read(1)#每次读一个字节
+f6.read(1)
+f6.read(3)#读三个字节
+f6.close()
+
+f6 = open('test3', 'rb+')
+f6.write('xyz')
+f6.close()
+cat test3 
+
+f = open('test3')
+f.read()
+f.seek(0) == f.seek(0, 0) #第一个0表示偏移量，第二个0表示位置
+f.seek(0, 2)
+
+
+
+
+
+f = open('test', 'w')
+f
+f.write('啊')
+f.close()
+f = open('test', 'rb+')
+f.read()
+f.close()
+
+!echo 马哥教育 > test
+f = open('test', 'rb') #需要指定编码
+#f = open('test', 'r', encoding='utf-8') 需要跟写入的一致，不然报错gbk
+#默认情况下windows使用gbk编码，类unix使用utf-8编码
+f.read(1)
+f.read()
+f.close()
+
+#对于文件关闭的操作
+f = open('test')
+print(f.closed)
+f.write('abc') #由于文件没有写权限，导致不断创建文件描述符，从而消耗系统资源
+f.closed
+print(f.closed)
+
+#
+f = open('test')
+with f:          #这种方式能有效避免文件描述符的消耗(上下文管理：在文件对象中，with后面的文件对象在离开with时，会强制调用f.close()方法，还会调用flush)
+   print(f.closed)  #将内存中的内容写进磁盘
+   f.write('abc')
+   f.close()
+   print(f.closed)
+f.closed   
+
+with open('test') as f1: #相当于 f1 = open('test')
+   print(f1)
+   print(f1.read())
+
+f2 = open('test')
+with f2 as f3: #f2 = f3
+   print(f2 is f3)
+   print(f2 == f3)
+   print(f2)
+   print(f3)
+  
+with open('test', 'w') as f:
+   f.write('abc'\n123\nxyz)
+
+with open('test') as f:
+   print(f.read().encode())
+   
+#逐行读取
+wirh open('test') as f: #文件对象为可迭代对象
+   for line in f:
+      print(line, end='')
+      print(line.encode())#某些看不见的控制字符，可使用encode方法来全部输出
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
